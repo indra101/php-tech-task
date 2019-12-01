@@ -26,13 +26,20 @@ class LunchController extends AbstractController
             $recipe = new Recipe($rec, $ingredients);
 
             if(!$recipe->is_expired($today)) {
-                $res[] = $recipe->get_title();
+                $res[] = array( 'title' => $recipe->get_title(),
+                                'best_before' => $recipe->get_ingredients()->get_last_best_before()
+                                );
             }
         }
 
-        print_r($res);
-        die;
+        usort($res, function($a, $b){
+            if ($a['best_before'] == $b['best_before']) {
+                return 0;
+            }
+            return ($a['best_before'] < $b['best_before']) ? 1 : -1;
+        });
 
+        return $this->json(array('data' => $res));
     }
 }
 
@@ -69,7 +76,6 @@ class Recipe
             $use_by = $ing->get_use_by();
 
             $dt = date('Y-m-d',$date);
-            echo"$name: $use_by, $res, $dt<br>";
         }
 
         return $res;
@@ -80,6 +86,10 @@ class Recipe
                         // 'ingredients' => $this->best_before,
                         // 'use_by' => $this->use_by,
                     );
+    }
+
+    public function get_last_best_before() {
+        return $this->ingredients->get_last_best_before();
     }
 
 }
@@ -126,10 +136,15 @@ class IngredientList
     }
 
     public function get_last_best_before() {
-        $bbs = array();
+        $last = null;
         foreach($this->list as $ing) {
-            $bbs[] = date('Y-m-d',strtotime($ing->get_best_before()));
+            $bb = date('Y-m-d',strtotime($ing->get_best_before()));
+            if(empty($last) || $bb < $last) {
+                $last = $bb;
+            }
         }
+
+        return $last;
     }
 
 }
