@@ -1,51 +1,35 @@
-# PHP Technical Task
-Suggested recipes for lunch API
+PHP Technical Test
+========================
 
-## Time​ management
-We recommend you to not spend more than 2 hours in this task, but it's up to you how you manage your time
-to accomplish at least the requirements.
+This is the service application for technical test on Loadsmile by Indra Setiawan
 
-## Assessment
+Installation
+------------
 
-Our assessment criteria will pay attention on:
-- How the application is structured.
-- Code quality (Clean code).
-- Quality of tests.
-- Interpretation of the problem.
-- Use of `git`.
-- Implementation and final execution.
-- Commits, as this will allow us to understand some of the decisions you make throughout the process.
+There are several plugins that must be installed, that is annotations, symfony/flex, symfony/maker-bundle, and phpunit for the unit test. Plugin installation can be done using composer.
 
-## User Story
-As a User I would like to make a request to an API that will determine from a set of recipes what I can have for lunch today based on the contents of my fridge, so that I quickly decide what I’ll be having.
+```bash
+$ composer require annotations
+$ composer require symfony/flex
+$ composer require symfony/maker-bundle
+$ composer require --dev phpunit
+```
 
-__Acceptance Criteria__
-- Given that I have made a request to the `​/lunch`​ endpoint I should receive a JSON response of the recipes 
-that I can prepare based on the availability of ingredients in my fridge.
-- Given that an ingredient is past its ​use-by​ date (inclusive), I should not receive recipes containing this ingredient.
-- Given that an ingredient is past its ​best-before​ date (inclusive), but is still within its ​use-by​ date (inclusive),
-any recipe containing the oldest (less fresh) ingredient should placed at the bottom of the response object.
+Usage
+-----
 
-__Additional Criteria__
-- The application SHOULD contains unit / integration tests (e.g. using ​PHPUnit​).
-- The application MUST be completed using an OOP approach.
-- The application MUST be ​PSR​ compliant.
-- Any dependencies MUST be installed using ​Composer​ (no need to commit dependencies, the
-composer.lock file will be sufficient).
-- Use PHP5.6 or PHP7.
-- Any installation, build steps, testing and usage instructions MUST be provided in a ​README.md
-file in the root of the application.
+You can access the application in your
+browser at the given URL (<https://localhost:8000> by default) and add: 
+1. '\lunch' to get the suggested recipes for today
+2. '\lunch\YYYY-mm-dd' to get the suggested recipes for the specified date
 
-## Framework
-Use the Symfony micro framework (​https://symfony.com/doc/current/setup.html) to create the application API. 
 
-## Application Data
-For the purpose of this task, the application should simply read data from 2 x JSON files. The contents for these files can be found [here](src/App/Ingredient/data.json) and
-[here](src/App/Recipe/data.json).
- 
-## Submission
-The application should be committed to a ​public​ repository on ​GitHub​ or ​BitBucket (​lastname​-​firstname​-techtask-201910) and simply send us a link to the repository.
+Tests
+-----
 
-## Bonus
-Configure a Docker environment so that we can test and run the application quickly.
-The application should be installed with a single command.
+Execute this command to run tests:
+
+```bash
+$ php bin/phpunit
+```
+The tests will be used to check the constructor class for Ingredient class and Recipe class, wether it can instantiate the class with the proper JSON input or an invalid one.
