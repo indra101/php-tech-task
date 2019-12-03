@@ -2,6 +2,8 @@
 
 namespace App\Ingredient;
 
+use Symfony\Component\Config\Definition\Exception\Exception;
+
 class Ingredient 
 {
     private $title;
@@ -10,6 +12,10 @@ class Ingredient
 
     public function __construct($ing) 
     {
+        if(!isset($ing->title) || !isset($ing->{'best-before'}) || !isset($ing->{'use-by'})) {
+            throw new Exception("Invalid JSON");
+        }
+
         $this->title = $ing->title;
         $this->best_before = $ing->{'best-before'};
         $this->use_by = $ing->{'use-by'};

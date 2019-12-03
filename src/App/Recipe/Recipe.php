@@ -10,8 +10,12 @@ class Recipe
     private $title;
     private $ingredients;
 
-    public function __construct($rec, $ingLIst) 
+    public function __construct($rec, IngredientList $ingLIst) 
     {
+        if(!isset($rec->title) || !isset($rec->ingredients) || !$ingLIst) {
+            throw new Exception("Invalid JSON");
+        }
+
         $this->title = $rec->title;
         $ingTitles = $rec->ingredients;
         $this->ingredients = IngredientList::from_titles($ingTitles, $ingLIst);

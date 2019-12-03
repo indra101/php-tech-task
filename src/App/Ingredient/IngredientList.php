@@ -8,7 +8,7 @@ class IngredientList
 {
     private $list = array();
 
-    public function create($ingList) {
+    public static function create($ingList) {
         $instance = new self();
         
         foreach($ingList as $i) {
