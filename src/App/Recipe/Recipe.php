@@ -48,10 +48,7 @@ class Recipe
     }
 
     public function getArray() {
-        return array(   'title' => $this->title,
-                        // 'ingredients' => $this->best_before,
-                        // 'use_by' => $this->use_by,
-                    );
+        return array('title' => $this->title);
     }
 
     public function get_last_best_before() {

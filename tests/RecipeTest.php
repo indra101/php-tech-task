@@ -9,10 +9,10 @@ final class RecipeTest extends TestCase
     public function testCanBeCreatedFromValidJson(): void
     {
         $arr = array("title" => "Ham and Cheese Toastie",
-                                        "ingredients" => array( "Ham",
-                                                                "Cheese",
-                                                                "Bread",
-                                                                "Butter")
+                    "ingredients" => array( "Ham",
+                                            "Cheese",
+                                            "Bread",
+                                            "Butter")
                
                     );
 
