@@ -20,8 +20,8 @@ Usage
 
 You can access the application in your
 browser at the given URL (<https://localhost:8000> by default) and add: 
-1. '\lunch' to get the suggested recipes for today
-2. '\lunch\YYYY-mm-dd' to get the suggested recipes for the specified date
+1. '/lunch' to get the suggested recipes for today
+2. '/lunch/YYYY-mm-dd' to get the suggested recipes for the specified date
 
 
 Tests
