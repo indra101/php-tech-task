@@ -11,9 +11,9 @@ use App\Recipe\Recipe;
 class LunchController extends AbstractController
 {
     /**
-     * @Route("/lunch", name="lunch")
+     * @Route("/lunch/{date}", name="lunch")
      */
-    public function index()
+    public function index(string $date = '')
     {
         $ingJson = file_get_contents(__DIR__ . '/../Ingredient/data.json');
         $ingredients = IngredientList::create(json_decode($ingJson)->ingredients);
@@ -23,9 +23,12 @@ class LunchController extends AbstractController
 
         $res = array();
 
+        if(empty($date))
+            $date = "".date('Y-m-d');
+
         foreach($recipes as $rec) {
 
-            $today = strtotime('2019-03-08');
+            $today = strtotime($date);
             $recipe = new Recipe($rec, $ingredients);
 
             if(!$recipe->is_expired($today)) {
